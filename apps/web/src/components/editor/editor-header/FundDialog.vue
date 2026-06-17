@@ -19,13 +19,13 @@ const dialogOpen = computed({
 
 const contributors = [
   {
-    name: `yanglbme`,
-    imageUrl: `https://cdn-doocs.oss-cn-shenzhen.aliyuncs.com/gh/doocs/md/images/support1.jpg`,
+    name: `wechat`,
+    imageUrl: `https://www.techgrow.cn/img/pay_wx.png`,
     altText: `赞赏二维码 1`,
   },
   {
-    name: `yangfong`,
-    imageUrl: `https://cdn-doocs.oss-cn-shenzhen.aliyuncs.com/gh/doocs/md/images/support2.jpg`,
+    name: `alipay`,
+    imageUrl: `https://www.techgrow.cn/img/pay_zfb.png`,
     altText: `赞赏二维码 2`,
   },
 ]

@@ -1,5 +1,13 @@
 <script setup lang="ts">
 import { BookText, Heart, HelpCircle, MessageSquare, Tag } from '@lucide/vue'
+import {
+  isHelpAboutEnabled,
+  isHelpFeedbackEnabled,
+  isHelpFundEnabled,
+  isHelpMarkdownEnabled,
+  isHelpMenuEnabled,
+  isHelpReleasesEnabled,
+} from '@/services/help/config'
 import { useUIStore } from '@/stores/ui'
 
 const props = withDefaults(defineProps<{
@@ -11,6 +19,13 @@ const props = withDefaults(defineProps<{
 const { asSub } = toRefs(props)
 const uiStore = useUIStore()
 const { toggleShowAboutDialog, toggleShowFundDialog, toggleShowMarkdownHelpDialog } = uiStore
+
+const showHelpMenu = isHelpMenuEnabled()
+const showMarkdownHelp = isHelpMarkdownEnabled()
+const showFeedback = isHelpFeedbackEnabled()
+const showReleases = isHelpReleasesEnabled()
+const showAbout = isHelpAboutEnabled()
+const showFund = isHelpFundEnabled()
 
 function openAboutDialog() {
   toggleShowAboutDialog(true)
@@ -35,28 +50,28 @@ function openReleases() {
 
 <template>
   <!-- 作为 MenubarSub 使用 -->
-  <MenubarSub v-if="asSub">
+  <MenubarSub v-if="asSub && showHelpMenu">
     <MenubarSubTrigger>
       帮助
     </MenubarSubTrigger>
     <MenubarSubContent>
-      <MenubarItem @click="openMarkdownHelp()">
+      <MenubarItem v-if="showMarkdownHelp" @click="openMarkdownHelp()">
         <BookText class="mr-2 h-4 w-4" />
         语法帮助
       </MenubarItem>
-      <MenubarItem @click="openFeedback()">
+      <MenubarItem v-if="showFeedback" @click="openFeedback()">
         <MessageSquare class="mr-2 h-4 w-4" />
         反馈
       </MenubarItem>
-      <MenubarItem @click="openReleases()">
+      <MenubarItem v-if="showReleases" @click="openReleases()">
         <Tag class="mr-2 h-4 w-4" />
         版本历史
       </MenubarItem>
-      <MenubarItem @click="openAboutDialog()">
+      <MenubarItem v-if="showAbout" @click="openAboutDialog()">
         <HelpCircle class="mr-2 h-4 w-4" />
         关于
       </MenubarItem>
-      <MenubarItem @click="openFundDialog()">
+      <MenubarItem v-if="showFund" @click="openFundDialog()">
         <Heart class="mr-2 h-4 w-4" />
         赞赏
       </MenubarItem>
@@ -64,26 +79,26 @@ function openReleases() {
   </MenubarSub>
 
   <!-- 作为 MenubarMenu 使用（默认） -->
-  <MenubarMenu v-else>
+  <MenubarMenu v-else-if="showHelpMenu">
     <MenubarTrigger>帮助</MenubarTrigger>
     <MenubarContent align="start">
-      <MenubarItem @click="openMarkdownHelp()">
+      <MenubarItem v-if="showMarkdownHelp" @click="openMarkdownHelp()">
         <BookText class="mr-2 h-4 w-4" />
         语法帮助
       </MenubarItem>
-      <MenubarItem @click="openFeedback()">
+      <MenubarItem v-if="showFeedback" @click="openFeedback()">
         <MessageSquare class="mr-2 h-4 w-4" />
         反馈
       </MenubarItem>
-      <MenubarItem @click="openReleases()">
+      <MenubarItem v-if="showReleases" @click="openReleases()">
         <Tag class="mr-2 h-4 w-4" />
         版本历史
       </MenubarItem>
-      <MenubarItem @click="openAboutDialog()">
+      <MenubarItem v-if="showAbout" @click="openAboutDialog()">
         <HelpCircle class="mr-2 h-4 w-4" />
         关于
       </MenubarItem>
-      <MenubarItem @click="openFundDialog()">
+      <MenubarItem v-if="showFund" @click="openFundDialog()">
         <Heart class="mr-2 h-4 w-4" />
         赞赏
       </MenubarItem>
