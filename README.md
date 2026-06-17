@@ -141,6 +141,18 @@ docker run -d -p 8080:80 doocs/md:latest
 
 启动后访问 http://localhost:8080 即可。Docker 镜像的更多信息，请参考 https://github.com/doocs/docker-md
 
+### 方式三：本地代码 + Docker
+
+```sh
+# 基于本地代码构建 Tengine 镜像
+bash ./scripts/build-tengine.sh
+
+# 创建并启动 Tengine 镜像
+docker run -d --name doocs-md-tengine -p 8080:80 doocs/md:latest-tengine
+```
+
+启动后访问 http://localhost:8080 即可。Docker 镜像的更多信息，请参考 https://github.com/doocs/docker-md
+
 ## Star 趋势
 
 <a href="https://www.star-history.com/?repos=doocs%2Fmd&type=date&legend=top-left">
