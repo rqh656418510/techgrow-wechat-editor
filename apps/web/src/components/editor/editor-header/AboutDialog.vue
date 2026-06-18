@@ -31,7 +31,7 @@ function onRedirect(url: string) {
   <CloudPanelDialog
     v-model:open="dialogOpen"
     title="关于"
-    description=""
+    description="一款高度简洁的微信公众号 Markdown 编辑器"
     :icon="HelpCircle"
   >
     <div class="space-y-4 px-4 py-6 text-center sm:px-6">
