@@ -10,6 +10,7 @@ import { useThemeStore } from '@/stores/theme'
 import { useUIStore } from '@/stores/ui'
 import EditDropdown from './EditDropdown.vue'
 import FileDropdown from './FileDropdown.vue'
+import FlavorDropdown from './FlavorDropdown.vue'
 import FormatDropdown from './FormatDropdown.vue'
 import HelpDropdown from './HelpDropdown.vue'
 import InsertDropdown from './InsertDropdown.vue'
@@ -236,6 +237,7 @@ function copyToWeChat() {
         <FormatDropdown />
         <InsertDropdown />
         <StyleDropdown />
+        <FlavorDropdown />
         <HelpDropdown />
       </Menubar>
     </div>
@@ -255,6 +257,7 @@ function copyToWeChat() {
             <FormatDropdown :as-sub="true" />
             <InsertDropdown :as-sub="true" />
             <StyleDropdown :as-sub="true" />
+            <FlavorDropdown :as-sub="true" />
             <HelpDropdown :as-sub="true" />
           </MenubarContent>
         </MenubarMenu>
