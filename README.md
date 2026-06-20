@@ -85,7 +85,7 @@ nvm i && nvm use
 # 安装依赖
 pnpm i
 
-# 启动开发模式，访问 http://localhost:5173/md/
+# 启动开发模式，访问 http://localhost:5173/md/，可添加 --host 参数
 pnpm web dev
 
 # 构建，部署在 /md 路径下

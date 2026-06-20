@@ -18,8 +18,8 @@ export function removeBoldMarkers(content: string): string {
   return content.replace(/\*\*/g, ``)
 }
 
-/** 将相对路径 ../../../ 替换为 TechGrow 站点地址 */
-export function replaceTechGrowRelativeUrls(content: string): string {
+/** 将相对路径 ../../../ 替换为 Hexo 站点地址 */
+export function replaceHexoRelativeUrls(content: string): string {
   return content.split(`../../../`).join(`https://www.techgrow.cn/`)
 }
 
@@ -58,11 +58,11 @@ export function convertAlertBlocks(content: string): string {
   return result.join(`\n`)
 }
 
-/** 依次应用 TechGrow 风格所需的 Markdown 转换 */
-export function applyTechGrowStyleMarkdown(content: string): string {
+/** 依次应用 Hexo 风格所需的 Markdown 转换 */
+export function applyHexoStyleMarkdown(content: string): string {
   let result = content
   result = removeBoldMarkers(result)
-  result = replaceTechGrowRelativeUrls(result)
+  result = replaceHexoRelativeUrls(result)
   result = convertAlertBlocks(result)
   return result
 }
