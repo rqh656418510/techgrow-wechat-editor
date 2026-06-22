@@ -193,9 +193,9 @@ const syntaxCategories: SyntaxCategory[] = [
         tip: `横屏滑动图片，仅支持微信公众号`,
       },
       {
-        name: `GFM 提示块`,
-        syntax: `> [!NOTE]\n> 这是给读者的一个有用笔记。\n\n> [!TIP]\n> 这里有一个小技巧，可以让排版更高效。\n\n> [!IMPORTANT]\n> 请务必在发布前仔细检查你的图文内容。\n\n> [!WARNING]\n> 此操作不可逆，请谨慎执行。\n\n> [!CAUTION]\n> 过度使用特殊样式可能会影响阅读体验。`,
-        tip: `支持 NOTE、TIP、IMPORTANT、WARNING、CAUTION 等类型`,
+        name: `提示块`,
+        syntax: `> [!NOTE]\n> 这是给读者的一个有用笔记。\n\n> [!TIP]\n> 这里有一个小技巧，可以让排版更高效。\n\n> [!IMPORTANT]\n> 请务必在发布前仔细检查你的图文内容。\n\n> [!WARNING]\n> 此操作不可逆，请谨慎执行。`,
+        tip: `支持 NOTE、TIP、IMPORTANT、WARNING 等类型`,
       },
       {
         name: `HTML 标签`,

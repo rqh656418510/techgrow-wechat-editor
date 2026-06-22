@@ -58,11 +58,26 @@ export function convertAlertBlocks(content: string): string {
   return result.join(`\n`)
 }
 
+/** 删除含 Hexo 标记 <!-- more -->、<!-- toc --> 的整行 */
+export function removeHexoMarkerLines(content: string): string {
+  return content
+    .split(`\n`)
+    .filter(line => !/^\s*<!--\s*(?:more|toc)\s*-->\s*$/.test(line))
+    .join(`\n`)
+}
+
+/** 去掉代码块语言标识前的空格，如 ``` sh → ```sh */
+export function normalizeCodeFenceLanguage(content: string): string {
+  return content.replace(/^(\s*```)[ \t]+(\S+)/gm, `$1$2`)
+}
+
 /** 依次应用 Hexo 风格所需的 Markdown 转换 */
 export function applyHexoStyleMarkdown(content: string): string {
   let result = content
   result = removeBoldMarkers(result)
   result = replaceHexoRelativeUrls(result)
   result = convertAlertBlocks(result)
+  result = removeHexoMarkerLines(result)
+  result = normalizeCodeFenceLanguage(result)
   return result
 }
