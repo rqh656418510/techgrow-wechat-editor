@@ -22,9 +22,14 @@ export function useEditorDocumentActions() {
     editorStore.clearContent()
   }
 
+  async function saveContent() {
+    await postStore.saveCurrentPost()
+  }
+
   return {
     formatContent,
     resetContent,
     clearContent,
+    saveContent,
   }
 }

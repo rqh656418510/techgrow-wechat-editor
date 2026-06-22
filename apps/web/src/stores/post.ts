@@ -68,6 +68,15 @@ export const usePostStore = defineStore(`post`, () => {
     await documentRepo.saveAll([...posts.value])
   }
 
+  /** 将编辑器内容同步到 store 并立即持久化到本地 */
+  async function saveCurrentPost(): Promise<void> {
+    const editorStore = useEditorStore()
+    editorStore.flushContentToPostStore()
+    persistAll.flush()
+    persistOne.flush()
+    await persistImmediately()
+  }
+
   watch(
     posts,
     (value, oldValue) => {
@@ -107,13 +116,8 @@ export const usePostStore = defineStore(`post`, () => {
   })
 
   onMounted(() => {
-    const editorStore = useEditorStore()
-
     const flushToDisk = () => {
-      editorStore.flushContentToPostStore()
-      persistAll.flush()
-      persistOne.flush()
-      void persistImmediately()
+      void saveCurrentPost()
     }
 
     const onVisibilityChange = () => {
@@ -272,5 +276,6 @@ export const usePostStore = defineStore(`post`, () => {
     replacePosts,
     replacePostsAndPersist,
     persistImmediately,
+    saveCurrentPost,
   }
 })

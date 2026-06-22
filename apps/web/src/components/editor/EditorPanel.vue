@@ -8,6 +8,7 @@ import imageCompression from 'browser-image-compression'
 import { defineAsyncComponent } from 'vue'
 import SlashCommandMenu from '@/components/editor/SlashCommandMenu.vue'
 import { SearchTab } from '@/components/ui/search-tab'
+import { useEditorDocumentActions } from '@/composables/useEditorDocumentActions'
 import { useEditorRefresh } from '@/composables/useEditorRefresh'
 import { useImageUploader } from '@/composables/useImageUploader'
 import { completeInitialPreviewBoot } from '@/composables/useInitialPreviewBoot'
@@ -30,6 +31,7 @@ const themeStore = useThemeStore()
 const uiStore = useUIStore()
 const { upload } = useImageUploader()
 const { editorRefresh } = useEditorRefresh()
+const { saveContent } = useEditorDocumentActions()
 
 const {
   visible: slashVisible,
@@ -142,8 +144,33 @@ watch(searchTabRequest, (request) => {
   }
 })
 
+function shouldTriggerSaveShortcut(e: KeyboardEvent): boolean {
+  if (!(e.ctrlKey || e.metaKey) || e.altKey || e.shiftKey || e.key.toLowerCase() !== `s`)
+    return false
+
+  const target = e.target
+  if (!(target instanceof HTMLElement))
+    return true
+
+  if (target.closest(`.cm-editor`))
+    return true
+
+  const tag = target.tagName
+  if (tag === `INPUT` || tag === `TEXTAREA` || tag === `SELECT` || target.isContentEditable)
+    return false
+
+  return true
+}
+
 function handleGlobalKeydown(e: KeyboardEvent) {
   const editorView = codeMirrorView.value
+
+  if (shouldTriggerSaveShortcut(e)) {
+    e.preventDefault()
+    void saveContent()
+    return
+  }
+
   if (e.key === `Escape` && searchTabRef.value?.showSearchTab) {
     searchTabRef.value.showSearchTab = false
     e.preventDefault()
@@ -535,7 +562,7 @@ onMounted(() => {
     void completeInitialPreviewBoot()
   })
 
-  document.addEventListener(`keydown`, handleGlobalKeydown, { passive: false, capture: false })
+  document.addEventListener(`keydown`, handleGlobalKeydown, { passive: false, capture: true })
 })
 
 watch(isDark, () => {
@@ -613,7 +640,7 @@ onUnmounted(() => {
   window.removeEventListener(MATHJAX_READY_EVENT, handleMathJaxReady)
   clearTimeout(historyTimer.value)
   clearTimeout(changeTimer.value)
-  document.removeEventListener(`keydown`, handleGlobalKeydown, { capture: false })
+  document.removeEventListener(`keydown`, handleGlobalKeydown, { capture: true })
 })
 
 defineExpose({
